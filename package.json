@@ -1,0 +1,80 @@
+{
+  "name": "dsc-adapter",
+  "display_name": "DSC",
+  "version": "0.5.1",
+  "description": "DSC adapter add-on for Mozilla WebThings Gateway",
+  "author": "Mozilla IoT",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "keywords": [
+    "mozilla",
+    "iot",
+    "adapter",
+    "dsc"
+  ],
+  "homepage": "https://github.com/mozilla-iot/example-adapter",
+  "license": "MPL-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mozilla-iot/example-adapter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mozilla-iot/example-adapter/issues"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.2",
+    "eslint": "^6.0.1"
+  },
+  "files": [
+    "LICENSE",
+    "SHA256SUMS",
+    "dsc-adapter.js",
+    "index.js"
+  ],
+  "moziot": {
+    "api": {
+      "min": 2,
+      "max": 2
+    },
+    "plugin": true,
+    "exec": "{nodeLoader} {path}",
+    "enabled": true,
+    "config": {
+      "port": "/dev/ttyUSB0"
+    },
+    "schema": {
+      "definitions": {
+        "ZONE": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[0-9][0-9][0-9]$",
+              "default": "001"
+            },
+            "type": {
+              "type": "string",
+              "pattern": "^(Window|Door|Motion)$",
+              "default": "Window"
+            }
+          }
+        }
+      },
+      "type": "object",
+      "properties": {
+        "zones": {
+          "type": "array",
+          "title": "zones",
+          "items": {
+            "$ref": "#/definitions/ZONE"
+          }
+        }
+      }
+    }
+  },
+  "dependencies": {
+    "serialport": "^7.1.5"
+  }
+}
